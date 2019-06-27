@@ -1,45 +1,45 @@
 import React, { Component } from "react";
 import "./style.css";
-// import tiles from "../../tiles.json";
+import tileArray from "../../TileArray.json";
 import Banner from "../Banner";
-// import GameTiles from "../GameTiles";
+import GameTiles from "../GameTiles";
 
 class GameBoard extends Component {
   state = {
-    tiles: [
-      {
-        id: 1,
-        src: "../images/01_img.png",
-        unclicked: true
-      },
-      {
-        id: 2,
-        src: "../images/02_img.png",
-        unclicked: true
-      },
-      {
-        id: 3,
-        src: "../images/03_img.png",
-        unclicked: true
-      },
-      {
-        id: 4,
-        src: "../images/04_img.png",
-        unclicked: true
-      }
-    ],
+    tileArray,
+    // tiles: [
+    //   {
+    //     id: 1,
+    //     src: "../images/01_img.png",
+    //     unclicked: true
+    //   },
+    //   {
+    //     id: 2,
+    //     src: "../images/02_img.png",
+    //     unclicked: true
+    //   },
+    //   {
+    //     id: 3,
+    //     src: "../images/03_img.png",
+    //     unclicked: true
+    //   },
+    //   {
+    //     id: 4,
+    //     src: "../images/04_img.png",
+    //     unclicked: true
+    //   }
+    // ],
     // "-1" forces the score to start at "zero" on componentDidMount;
     count: -1,
     topScore: -1
   };
 
-  // =============================================
-  handleClick() {
-    const shuffleArray = tiles => this.state.tiles.sort(() => Math.random() - 0.5);
-    shuffleArray(this.state.tiles);
-    console.log(this.state.tiles);
+  handleClick = id => {
+    const shuffleArray = tiles => this.state.tileArray.sort(() => Math.random() - 0.5);
+    shuffleArray(this.state.tileArray);
+    console.log(this.state.tileArray);
     this.setState({
-      tiles: this.state.tiles,
+      tileArray: this.state.tileArray,
       count: this.state.count + 1
     });
 
@@ -49,6 +49,8 @@ class GameBoard extends Component {
   componentDidMount() {
     this.handleClick();
   }
+
+ 
 
   // ==============================================
 
@@ -73,30 +75,25 @@ class GameBoard extends Component {
   // }
   // Couldn't Get this Update to "Unclicked"->False to Work (Yet)============================
 
-  // Starts the game as soon as the component loads
-  
+  // toggleClass(){
+  //   const currentState = this.state.tileArray.unclicked;
+  //   this.setState({ unclicked: !currentState})
+  // }
 
+
+  // Starts the game as soon as the component loads
   render() {
     return (
       <div>
         <Banner count={this.state.count} topScore={this.state.topScore} />
-        <div className="row justify-content-center">
-          {this.state.tiles.map(tile => {
-            return (
-              <div className="card col-3 m-3">
-                <div className="img-container">
-                  <img
-                    src={tile.src}
-                    key={tile.id}
-                    alt="..."
-                    onClick={() => this.handleClick()}
-                    // value={false}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          <GameTiles 
+            tileArray={tileArray}
+            key={tileArray.id}
+            src={tileArray.src}
+            unclicked={true}
+            handleClick={this.handleClick}
+            className={tileArray.unclicked ? 'unclicked': null}
+            />
       </div>
     );
   }

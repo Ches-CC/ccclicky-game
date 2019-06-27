@@ -3,10 +3,21 @@ import "./style.css";
 
 function GameTiles(props) {
   return (
-    <div className="card">
-      <div className="img-container">
-        <img src={props.src} alt="..." />
-      </div>
+    <div className="row justify-content-center">
+
+      {props.tileArray.map(tile => {
+        return(
+        <div className="card col-3 m-3">
+          <div className="img-container">
+            <img
+              src={tile.src}
+              alt="..."
+              key={tile.id}
+              onClick={() => props.handleClick(props.id)}
+            />
+          </div>
+        </div>
+      )})}
     </div>
   );
 }
